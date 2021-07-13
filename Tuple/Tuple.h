@@ -18,25 +18,25 @@ class Tuple<Cur, Others...> : private Tuple<Others...>
 			{}
 
 		template<size_t N>
-		auto& get()
+		constexpr auto& get()
 			{
-			return static_cast<Tuple<Others...>&>(*this).get<N - 1>();
+			return Tuple<Others...>::template get<N - 1>();
 			}
 
 		template<>
-		auto& get<0u>()
+		constexpr auto& get<0u>()
 			{
 			return m_cur;
 			}
 		
 		template<size_t N>
-		const auto& get() const
+		constexpr const auto& get() const
 			{
-			return static_cast<Tuple<Others...>&>(*this).get<N - 1>();
+			return Tuple<Others...>::template get<N - 1>();
 			}
 
 		template<>
-		const auto& get<0u>() const
+		constexpr const auto& get<0u>() const
 			{
 			return m_cur;
 			}
@@ -47,7 +47,7 @@ class Tuple<>
 	{
 	public:
 		template<size_t N>
-		auto& get() const
+		constexpr auto& get() const
 			{
 			static_assert(false, "Out of range!");
 			}
