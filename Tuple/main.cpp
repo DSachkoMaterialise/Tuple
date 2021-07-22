@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Tuple.h"
+#include <tuple>
 
 using namespace std;
 
@@ -21,4 +22,8 @@ int main()
 	tup_ref.get<0>() = 0;
 	tup_ref.get<1>() = "zero";
 	cout << x << ' ' << y << endl;
+
+	int a;
+	Tuple t{a};
+	Tuple<int> t2 = t;
 	}

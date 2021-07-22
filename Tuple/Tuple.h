@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <utility>
 
 template<typename... Args>
@@ -11,8 +11,13 @@ class Tuple<Cur, Others...> : private Tuple<Others...>
 		Cur m_cur{};
 
 		constexpr Tuple() noexcept = default;
+		constexpr Tuple(const Tuple& tup) : m_cur(tup.m_cur), Tuple<Others...>(static_cast<const Tuple<Others...>&>(tup))
+			{}
+		constexpr Tuple(Tuple&& tup) : m_cur(std::move(tup.m_cur)), Tuple<Others...>(static_cast<Tuple<Others...>&&>(tup))
+			{}
 
-		constexpr Tuple(Cur&& cur, Others&&... others) : Tuple<Others...>(std::forward<Others>(others)...), m_cur(std::forward<Cur>(cur))
+		template<typename CurC, typename... OthersC, std::enable_if_t<std::is_convertible_v<CurC, Cur>, int> = 0>
+		constexpr Tuple(CurC&& cur, OthersC&&... others) : Tuple<Others...>(std::forward<OthersC>(others)...), m_cur(std::forward<CurC>(cur))
 			{}
 
 		auto& operator=(const Tuple& tup)
@@ -63,7 +68,7 @@ class Tuple<>
 	};
 
 template<typename... Args>
-Tuple(Args&&... args) -> Tuple<Args...>;
+Tuple(Args&&... args) -> Tuple<std::decay_t<Args>...>;
 
 template< class... Types >
 struct std::tuple_size< Tuple<Types...> >
