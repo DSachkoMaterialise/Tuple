@@ -16,4 +16,9 @@ int main()
 	x = 2;
 	y = "lol";
 	cout << tup.get<0>() << ' ' << tup.get<1>() << endl;
+
+	Tuple<int&, string&> tup_ref{x, y};
+	tup_ref.get<0>() = 0;
+	tup_ref.get<1>() = "zero";
+	cout << x << ' ' << y << endl;
 	}

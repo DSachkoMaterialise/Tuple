@@ -8,7 +8,7 @@ template<typename Cur, typename... Others>
 class Tuple<Cur, Others...> : private Tuple<Others...>
 	{
 	public:
-		std::remove_reference_t<Cur> m_cur{};
+		Cur m_cur{};
 
 		constexpr Tuple() noexcept = default;
 
