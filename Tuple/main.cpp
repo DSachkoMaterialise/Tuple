@@ -5,6 +5,15 @@ using namespace std;
 
 int main()
 	{
-	Tuple<int, string> tup(1, "kek");
-	cout << tup.get<0>() << ' ' << tup.get<1>();
+	Tuple tup(1, "kek"s);
+	cout << tup.get<0>() << ' ' << tup.get<1>() << endl;
+
+	Tuple<int, string> tup2;
+	tup2 = tup;
+	cout << tup2.get<0>() << ' ' << tup2.get<1>() << endl;
+
+	auto& [x, y] = tup;
+	x = 2;
+	y = "lol";
+	cout << tup.get<0>() << ' ' << tup.get<1>() << endl;
 	}
