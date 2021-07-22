@@ -8,7 +8,7 @@ template<typename Cur, typename... Others>
 class Tuple<Cur, Others...> : private Tuple<Others...>
 	{
 	public:
-		Cur m_cur{};
+		Cur m_cur;
 
 		constexpr Tuple() noexcept = default;
 		constexpr Tuple(const Tuple& tup) : m_cur(tup.m_cur), Tuple<Others...>(static_cast<const Tuple<Others...>&>(tup))
@@ -23,14 +23,14 @@ class Tuple<Cur, Others...> : private Tuple<Others...>
 		auto& operator=(const Tuple& tup)
 			{
 			m_cur = tup.m_cur;
-			Tuple<Others...>::template operator=(static_cast<const Tuple<Others...>&>(tup));
+			Tuple<Others...>::operator=(static_cast<const Tuple<Others...>&>(tup));
 			return *this;
 			}
 
 		auto& operator=(Tuple&& tup)
 			{
 			m_cur = std::move(tup.m_cur);
-			Tuple<Others...>::template operator=(static_cast<Tuple<Others...>&&>(tup));
+			Tuple<Others...>::operator=(static_cast<Tuple<Others...>&&>(tup));
 			return *this;
 			}
 
